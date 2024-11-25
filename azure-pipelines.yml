@@ -9,6 +9,9 @@ pool:
   name: 'Default'  # Use the specified self-hosted agent pool
 
 steps:
+- script: echo $PATH
+  displayName: 'Print PATH'
+steps:
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
