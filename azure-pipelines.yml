@@ -7,8 +7,6 @@ trigger:
 
 pool:
   name: 'Default'  # Use the specified self-hosted agent pool
-  demands:
-    - agent.name -equals HMECL005883  # Specify the agent name
 
 steps:
 - task: Maven@3
