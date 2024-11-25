@@ -6,9 +6,7 @@ trigger:
 - master
 
 pool:
-  name: 'Azure Pipelines'  # Use the Default agent pool (or the name of your agent pool)
-  demands:
-    - agent.name -equals 'Hosted Agent'
+  name: 'Azure Pipelines'  # Use the specified self-hosted agent pool
 
 steps:
 - task: Maven@3
