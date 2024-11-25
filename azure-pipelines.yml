@@ -5,21 +5,25 @@ pool:
   name: 'Default'  # Use the specified self-hosted agent pool
 
 steps:
+
+# Step 1: Check Maven Version
 - script: |
     export PATH=$PATH:/opt/apache-maven-3.9.9/bin
     mvn -version
   displayName: 'Check Maven Version'
 
+# Step 2: Run Maven Build
 - task: Maven@4  # Updated Maven task version
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'Custom'
-    customJavaHome: '/opt/openjdk-17'  # Specify the path to your JDK
-    mavenVersionOption: 'Custom'
+    mavenPomFile: 'pom.xml'  # Specify the correct path to your pom.xml
+    mavenOptions: '-Xmx3072m'  # Optional: memory options for Maven build
+    javaHomeOption: 'Custom'  # Set to custom to specify a non-default JDK path
+    customJavaHome: '/usr/lib/jvm/java-17-openjdk-amd64'  # Path to your JDK (adjust as necessary)
+    mavenVersionOption: 'Custom'  # Custom Maven version (optional)
     customMavenPath: '/opt/apache-maven-3.9.9/bin'  # Path to Maven 3.9.9
-    jdkArchitectureOption: 'x64'  # Architecture should match your installed Java
-    jdkUserInputPath: '/opt/openjdk-17'  # This specifies the custom JDK location
+    jdkArchitectureOption: 'x64'  # Set architecture as per your Java installation
+    jdkUserInputPath: '/usr/lib/jvm/java-17-openjdk-amd64'  # JDK path
     publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'  # Optional: path to your JUnit test results
+    goals: 'package'  # Maven goals, e.g., 'package', 'install', 'clean'
+
