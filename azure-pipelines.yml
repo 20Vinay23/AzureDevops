@@ -2,23 +2,16 @@ trigger:
 - master
 
 pool:
-  name: 'Default'  # Your self-hosted agent pool
+  name: 'Default'  # Use the specified self-hosted agent pool
 
 steps:
-# Install Java 17 on the agent (if not already installed)
-- task: JavaToolInstaller@0
-  inputs:
-    versionSpec: '17.x'  # Use Java 17
-    jdkArchitecture: 'x64'
-
-# Maven build step
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '17'  # Reference JDK 17
-    jdkArchitectureOption: 'x64'
+    jdkVersionOption: '1.17'   # Java 17 is already installed, specify it here
+    jdkArchitectureOption: 'x64'  # Architecture should match your installed Java
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
