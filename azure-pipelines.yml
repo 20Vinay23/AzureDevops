@@ -5,12 +5,16 @@ pool:
   name: 'Default'  # Use the specified self-hosted agent pool
 
 steps:
-- task: Maven@3
+- script: |
+    echo "##vso[task.setvariable variable=JAVA_HOME_17_X64]/opt/openjdk-17"
+  displayName: 'Set JAVA_HOME_17_X64'
+
+- task: Maven@4  # Updated Maven task version
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.17'   # Java 17 is already installed, specify it here
+    javaHomeOption: 'Custom'
+    customJavaHome: '/opt/openjdk-17'  # Specify the custom path for JAVA_HOME_17_X64
     jdkArchitectureOption: 'x64'  # Architecture should match your installed Java
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
