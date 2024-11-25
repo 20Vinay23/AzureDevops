@@ -6,16 +6,20 @@ pool:
 
 steps:
 - script: |
-    echo "##vso[task.setvariable variable=JAVA_HOME_17_X64]/opt/openjdk-17"
-  displayName: 'Set JAVA_HOME_17_X64'
+    echo "Maven 3.9.9 is already installed"
+    mvn -version  # Confirm version on agent machine
+  displayName: 'Check Maven Version'
 
 - task: Maven@4  # Updated Maven task version
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'Custom'
-    customJavaHome: '/opt/openjdk-17'  # Specify the custom path for JAVA_HOME_17_X64
+    customJavaHome: '/opt/openjdk-17'  # Specify the path to your JDK
+    mavenVersionOption: 'Custom'
+    customMavenPath: '/opt/apache-maven-3.9.9/bin'  # Path to Maven 3.9.9
     jdkArchitectureOption: 'x64'  # Architecture should match your installed Java
+    jdkUserInputPath: '/opt/openjdk-17'  # This specifies the custom JDK location
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
