@@ -26,11 +26,18 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'  # Optional: path to your JUnit test results
     goals: 'package'
+
+- script: |
+    echo "Listing files in the source folder:"
+    ls -R $(Build.SourcesDirectory)  # List all files and directories recursively in the source folder
+  displayName: 'List Files in Source Directory'
+
+# Step 4: Copy Files
 - task: CopyFiles@2
   inputs:
-    Contents: '**/.war'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-
+    SourceFolder: '$(Build.SourcesDirectory)'  # Ensure this points to the source folder where the .war files are
+    Contents: '**/*.war'  # Copy all .war files in the source folder and subdirectories
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
