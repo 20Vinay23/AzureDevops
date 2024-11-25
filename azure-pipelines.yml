@@ -2,12 +2,13 @@
 # Build your Java project and run tests with Apache Maven.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
 trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  name: 'Azure Pipelines'  # Use the Default agent pool (or the name of your agent pool)
+  demands:
+    - agent.name -equals 'Hosted Agent'
 
 steps:
 - task: Maven@3
