@@ -6,8 +6,8 @@ pool:
 
 steps:
 - script: |
-    echo "Maven 3.9.9 is already installed"
-    mvn -version  # Confirm version on agent machine
+    export PATH=$PATH:/opt/apache-maven-3.9.9/bin
+    mvn -version
   displayName: 'Check Maven Version'
 
 - task: Maven@4  # Updated Maven task version
