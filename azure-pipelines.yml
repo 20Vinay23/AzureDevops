@@ -25,5 +25,14 @@ steps:
     jdkUserInputPath: '/usr/lib/jvm/java-17-openjdk-amd64'  # JDK path
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'  # Optional: path to your JUnit test results
-    goals: 'package'  # Maven goals, e.g., 'package', 'install', 'clean'
+    goals: 'package'
+- task: CopyFiles@2
+  inputs:
+    Contents: '**/.war'
+    TargetFolder: '$(build.artifactstagingdirectory)'
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'warfile'
+    publishLocation: 'Container'
